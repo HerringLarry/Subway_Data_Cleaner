@@ -11,65 +11,65 @@ THINGS TO DO:
     -MAKE SURE CALCULATIONS ARE CORRECT
 """
 
-def writeToFile(arr,fil):
+def write_to_file(arr,fil):
     with open(fil,'w+') as csvOne:
         one = csv.writer(csvOne)
         for x in arr:
             one.writerows([x])
 
-def subMember(rowO,rowA,i):
+def sub_member(rowO,rowA,i):
     a = int(rowO[i]) - int(rowA[i])
     if a < 0:
         return 0
     return a
 
-def addMember(rowO,rowA,i):
+def add_member(rowO,rowA,i):
     """
     Adds up two members of a row by converting them to ints, adding them, and then returning the string version of the sum
     """
     a = int(rowO[i]) + int(rowA[i])
     return str(a)
 
-def timeStepOne(inp, outp):
-    arrOne = []
+def time_step_one(inp, outp):
+    arr_one = []
     with open(inp,'r') as csvOne:
         one = csv.reader(csvOne)
-        arrOne.append(one.next())
+        arr_one.append(one.next())
         previous = one.next()
-        arrOne[0].pop(7)
-        accumEntries = 0
-        accumExits = 0
-        makeSure = 0
+        arr_one[0].pop(7)
+        accum_entries = 0
+        accum_exits = 0
+        make_sure = 0
         turnstile = "Initialized"
         for x in one:
-            if x[7][0] == "0" and  x[7][1] == "3" and makeSure > 0 and turnstile == x[2]:
+            if x[7][0] == "0" and  x[7][1] == "3" and make_sure > 0 and turnstile == x[2]:
                 keep = previous
-                accumEntries = subMember(x,previous,9) + accumEntries
-                accumExits = subMember(x,previous,10) + accumExits
-                keep[9] = str(accumEntries)
-                keep[10] = str(accumExits)
+                accum_entries = sub_member(x,previous,9) + accum_entries
+                accum_exits = sub_member(x,previous,10) + accum_exits
+                keep[9] = str(accum_entries)
+                keep[10] = str(accum_exits)
                 keep.pop(7)
-                arrOne.append(keep)
-                accumEntries = 0
-                accumExits = 0
-            elif turnstile != x[2] and makeSure > 0:
+                arr_one.append(keep)
+                accum_entries = 0
+                accum_exits = 0
+            elif turnstile != x[2] and make_sure > 0:
                 keep = previous
-                keep[9] = str(accumEntries)
-                keep[10] = str(accumExits)
+                keep[9] = str(accum_entries)
+                keep[10] = str(accum_exits)
                 keep.pop(7)
-                arrOne.append(keep)
-                accumEntries = 0
-                accumExits = 0
+                arr_one.append(keep)
+                accum_entries = 0
+                accum_exits = 0
             else:
-                makeSure += 1
-                accumEntries = subMember(x,previous,9) + accumEntries
-                accumExits = subMember(x,previous,10) + accumExits
+                make_sure += 1
+                accum_entries = sub_member(x,previous,9) + accum_entries
+                accum_exits = sub_member(x,previous,10) + accum_exits
             previous = x
             turnstile = x[2]
     
-    writeToFile(arrOne,outp)
+    write_to_file(arr_one,outp)
     
-def setDate(firstDay):
+def set_date(firstDay):
     """
     Creates string m d and y for first date so then datehelp can create
     6 more consecutive date strings
@@ -77,11 +77,11 @@ def setDate(firstDay):
     month = int(firstDay[0] + firstDay[1])
     day = int(firstDay[3] + firstDay[4])
     year = int(firstDay[6] + firstDay[7] + firstDay[8] + firstDay[9])
-    days = dateHelp(month,day,year)
+    days = date_help(month,day,year)
     return days
     
   
-def padZeros(num):
+def pad_zeros(num):
     """
     Returns string of num with 0 in front if num is less than 10
     """
@@ -91,20 +91,20 @@ def padZeros(num):
         return str(num)
 
 
-def dateHelp(m,d,y):
+def date_help(m,d,y):
     """
     Takes argument starting date separated into m d and y and creates array of strings of dates up to 6 days afterwards
     for a total of 7 uniformly formatted date strings
     """
     dates = []
     base = datetime(year = y,month = m, day = d)
-    dates.append(padZeros(base.month) + "/" + padZeros(base.day) + "/" + padZeros(base.year))
+    dates.append(pad_zeros(base.month) + "/" + pad_zeros(base.day) + "/" + pad_zeros(base.year))
     for i in range(0,6):
         base += timedelta(days=1)
-        dates.append(padZeros(base.month) + "/" + padZeros(base.day) + "/" + padZeros(base.year))
+        dates.append(pad_zeros(base.month) + "/" + pad_zeros(base.day) + "/" + pad_zeros(base.year))
     return dates
 
-def returnDate(date, dates):
+def return_date(date, dates):
     """
     returns place of date in array dates
     """
@@ -113,79 +113,81 @@ def returnDate(date, dates):
             return x
     return (-1)
 
-def sortDate(inp,outName):
+def sort_date(inp,out_name):
     """
     Creates 7 
     """
     tot = []
-    dayOne = []
-    dayTwo = []
-    dayThree = []
-    dayFour = []
-    dayFive = []
-    daySix = []
-    daySeven = []
+    day_one = []
+    day_two = []
+    day_three = []
+    day_four = []
+    day_five = []
+    day_six = []
+    day_seven = []
     dates = []
     with open(inp,'r') as csvOne:
         one = csv.reader(csvOne)
         fieldNames = map(string.strip,one.next())
-        dayOne.append(fieldNames)
-        dayTwo.append(fieldNames)
-        dayThree.append(fieldNames)
-        dayFour.append(fieldNames)
-        dayFive.append(fieldNames)
-        daySix.append(fieldNames)
-        daySeven.append(fieldNames)
+        day_one.append(fieldNames)
+        day_two.append(fieldNames)
+        day_three.append(fieldNames)
+        day_four.append(fieldNames)
+        day_five.append(fieldNames)
+        day_six.append(fieldNames)
+        day_seven.append(fieldNames)
         for x in one:
             tot.append(x)
-        print tot[0] 
-        fDate = tot[0][6]
-        dates = setDate(fDate)
+        f_date = tot[0][6]
+        dates = set_date(f_date)
         for x in tot:
-            d = returnDate(x[6],dates)
+            d = return_date(x[6],dates)
             if d >= 0:
                 if d == 0:
-                    dayOne.append(x)
+                    day_one.append(x)
                 elif d == 1:
-                    dayTwo.append(x)
+                    day_two.append(x)
                 elif d == 2:
-                    dayThree.append(x)
+                    day_three.append(x)
                 elif d == 3:
-                    dayFour.append(x)
+                    day_four.append(x)
                 elif d == 4:
-                    dayFive.append(x)
+                    day_five.append(x)
                 elif d == 5:
-                    daySix.append(x)
+                    day_six.append(x)
                 elif d == 6:
-                    daySeven.append(x)
+                    day_seven.append(x)
                     
     for x in range(0,7):
-        name = outName +  dates[x][0] + dates[x][1] + dates[x][3] + dates[x][4] + ".txt"
+        name = out_name +  dates[x][0] + dates[x][1] + dates[x][3] + dates[x][4] + ".txt"
         with open(name,'w+') as csvTwo:
             one = csv.writer(csvTwo)
             if x == 0:
-                for y in dayOne:
+                for y in day_one:
                     one.writerows([y])
             elif x == 1:
-                for y in dayTwo:
+                for y in day_two:
                     one.writerows([y])
             elif x == 2:
-                for y in dayThree:
+                for y in day_three:
                     one.writerows([y])
             elif x == 3:
-                for y in dayFour:
+                for y in day_four:
                     one.writerows([y])
             elif x == 4:
-                for y in dayFive:
+                for y in day_five:
                     one.writerows([y])
             elif x == 5:
-                for y in daySix:
+                for y in day_six:
                     one.writerows([y])
             elif x == 6:
-                for y in daySeven:
+                for y in day_seven:
                     one.writerows([y])
 
-def turnToStation(inp,outp):
+def turn_to_station(inp,outp):
+    """Rolls up individual turnstiles into stations.
+    Geocodes each station at the end
+    """
     arr = []
     with open (inp,'r') as csvOne:
         one = csv.reader(csvOne)
@@ -194,16 +196,16 @@ def turnToStation(inp,outp):
         arr[0].append("Longitude")
         arr[0].pop(2)
         while True:
-            accumEntries = 0
-            accumExits = 0
+            accum_entries = 0
+            accum_exits = 0
             try:
                 previous = one.next()
             except StopIteration:
                 break
             rowRead = one.next()
             while rowRead[3] == previous[3]:
-                accumEntries = accumEntries + int(rowRead[8])
-                accumExits = accumExits + int(rowRead[9])
+                accum_entries = accum_entries + int(rowRead[8])
+                accum_exits = accum_exits + int(rowRead[9])
                 previous = rowRead
                 try:
                     rowRead = one.next()
@@ -213,31 +215,34 @@ def turnToStation(inp,outp):
             previous.pop(2)
             previous.pop(7)
             previous.pop(7)
-            lat = addGeo(previous[2] + ' ' + previous[3] + ", New York")
-            previous.append(str(accumEntries))
-            previous.append(str(accumExits))
+            lat = add_geo(previous[2] + ' ' + previous[3] + ", New York")
+            previous.append(str(accum_entries))
+            previous.append(str(accum_exits))
             if lat is not None:
                 previous.append(str(lat[0]))
                 previous.append(str(lat[1]))
             arr.append([previous])
 
-    writeToFile(arr,outp) 
+    write_to_file(arr,outp) 
 
 
-def addGeo(str1):
+def add_geo(str1):
+    """
+        Geocodes input.
+    """
     g = geocoder.google(str1)
     return g.latlng
 
 def  main():
-    fileOne = "/Users/williamnewman/Desktop/Research/DataFiles/Subway December Data/turnstile_161203.txt"
-    fileTwo = "/Users/williamnewman/Desktop/Research/DataFiles/Subway December Data/turnstile_161210.txt"
-    timeOne = "/Users/williamnewman/Desktop/timeOne.txt"
+    file_one = "/Users/williamnewman/Desktop/Research/DataFiles/Subway December Data/turnstile_161203.txt"
+    file_two = "/Users/williamnewman/Desktop/Research/DataFiles/Subway December Data/turnstile_161210.txt"
+    time_one = "/Users/williamnewman/Desktop/time_one.txt"
     glo = "/Users/williamnewman/Desktop/dates/subway"
     d1 = "/Users/williamnewman/Desktop/dates/subway1126.txt"
     d2 = "/Users/williamnewman/Desktop/dates/1126update.txt"
-    timeStepOne(fileOne,timeOne)
-    sortDate(timeOne,glo)
-    turnToStation(d1,d2)
+    time_step_one(file_one,time_one)
+    sort_date(time_one,glo)
+    turn_to_station(d1,d2)
 
 
     
