@@ -1,8 +1,5 @@
 import csv
-import numpy as np
 import string
-from difflib import SequenceMatcher
-import fiona
 from datetime import datetime,timedelta,date
 import geocoder
 """
@@ -233,15 +230,6 @@ def add_geo(str1):
     g = geocoder.google(str1)
     return g.latlng
 
-def roll_into
-"""
-def ret_date_files_and_destinations(path_to,start_date):
-    l = []
-    l.append(path_to + start_date + '.txt')
-    dates = 
-    for x in range (0,6):
-        l.append(path_to + 
-"""
 
 
 def  main():
